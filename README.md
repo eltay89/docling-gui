@@ -1,53 +1,82 @@
 # Docling GUI
 
-A graphical user interface for Docling document processing, built with Python and CustomTkinter.
+A Python GUI application for document conversion using CustomTkinter.
 
-## Features
-
-- Convert documents between multiple formats (PDF, DOCX, PPTX, HTML, Markdown, JSON)
-- Batch processing of multiple files
-- OCR support for scanned documents with multi-language support
-- Table extraction with fast and accurate modes
-- Real-time progress tracking with terminal-style logging
-- Detailed error handling and reporting
-- Configuration persistence (remembers last used directories and settings)
-- Document structure visualization
-- Intuitive user interface with tooltips and help system
-- Threaded processing with cancellation support
+## Key Features
+- Convert between PDF, DOCX, PPTX, HTML, Markdown, and JSON
+- Batch processing support
+- OCR with multi-language support
+- Table extraction with fast/accurate modes
+- Real-time progress tracking
 
 ## Installation
 
-1. Ensure you have Python 3.8+ installed
-2. Install required dependencies:
+### Basic Installation
+1. Install Python 3.8+
+2. Install Docling:
    ```bash
-   pip install docling customtkinter pillow
+   pip install docling
    ```
-3. Download or clone this repository
+3. Install GUI dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 4. Run the application:
    ```bash
    python docling-gui.py
    ```
 
-## Usage
+Works on macOS, Linux, and Windows, with support for both x86_64 and arm64 architectures.
 
-1. Select the input format from the dropdown
-2. Choose a file or directory for batch processing
-3. Select output format (Markdown, HTML, or JSON)
-4. Configure OCR languages if needed (comma-separated)
-5. Choose table extraction mode (Fast or Accurate)
-6. Click "Convert" to start processing
-7. View results in the output panel
-8. Use the terminal window to monitor detailed conversion progress
-9. Access help documentation through the Help button
+### Alternative PyTorch Distributions
+Docling depends on PyTorch. For different architectures or CPU-only installations:
+```bash
+# Example for Linux CPU-only version
+pip install docling --extra-index-url https://download.pytorch.org/whl/cpu
+```
 
-## Advanced Features
+### OCR Engine Options
+Docling supports multiple OCR engines:
 
-- **Terminal Logging**: Real-time conversion progress and debugging information
-- **Error Handling**: Detailed error messages with traceback information
-- **Configuration**: Settings are automatically saved in config.json
-- **Thread Management**: Safe thread cancellation and cleanup
-- **File Validation**: Automatic output directory creation and permission checking
+| Engine        | Installation                          | Usage               |
+|---------------|---------------------------------------|---------------------|
+| EasyOCR       | Default in Docling                   | EasyOcrOptions      |
+| Tesseract     | System dependency (see below)        | TesseractOcrOptions |
+| Tesseract CLI | System dependency                    | TesseractCliOcrOptions |
+| OcrMac        | macOS only: `pip install ocrmac`     | OcrMacOptions       |
+| RapidOCR      | `pip install rapidocr_onnxruntime`   | RapidOcrOptions     |
+
+### Tesseract Installation
+For Tesseract OCR engine:
+
+#### macOS (via Homebrew)
+```bash
+brew install tesseract leptonica pkg-config
+export TESSDATA_PREFIX=/opt/homebrew/share/tessdata/
+```
+
+#### Linux (Debian-based)
+```bash
+sudo apt-get install tesseract-ocr
+export TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata/
+```
+
+#### Linking Tesseract
+For optimal performance:
+```bash
+pip uninstall tesserocr
+pip install --no-binary :all: tesserocr
+```
+
+## Development Setup
+To contribute to Docling development:
+```bash
+poetry install --all-extras
+```
+
+## Further Details
+For more information and advanced usage, refer to the official Docling repository:
+https://github.com/DS4SD/docling
 
 ## License
-
-This project is licensed under the MIT License.
+MIT License
